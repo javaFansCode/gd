@@ -1,0 +1,954 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.airmcl.air.order.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.airmcl.air.order.entity.Order" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="order_number" property="orderNumber" jdbcType="VARCHAR" />
+    <result column="service_id" property="serviceId" jdbcType="VARCHAR" />
+    <result column="service_time" property="serviceTime" jdbcType="SMALLINT" />
+    <result column="coupon_id" property="couponId" jdbcType="INTEGER" />
+    <result column="month_card_id" property="monthCardId" jdbcType="INTEGER" />
+    <result column="beauty_id" property="beautyId" jdbcType="INTEGER" />
+    <result column="beauty_name" property="beautyName" jdbcType="VARCHAR" />
+    <result column="bt_id" property="btId" jdbcType="INTEGER" />
+    <result column="bt_name" property="btName" jdbcType="VARCHAR" />
+    <result column="bt_mobile" property="btMobile" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_mobile" property="userMobile" jdbcType="VARCHAR" />
+    <result column="referee_mobile" property="refereeMobile" jdbcType="INTEGER" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="change_price" property="changePrice" jdbcType="DECIMAL" />
+    <result column="actual_price" property="actualPrice" jdbcType="DECIMAL" />
+    <result column="reduce_price" property="reducePrice" jdbcType="DECIMAL" />
+    <result column="is_user_package" property="isUserPackage" jdbcType="TINYINT" />
+    <result column="order_type" property="orderType" jdbcType="TINYINT" />
+    <result column="order_industry_type" property="orderIndustryType" jdbcType="TINYINT" />
+    <result column="state" property="state" jdbcType="TINYINT" />
+    <result column="pay_way" property="payWay" jdbcType="TINYINT" />
+    <result column="service_start_time" property="serviceStartTime" jdbcType="INTEGER" />
+    <result column="service_end_time" property="serviceEndTime" jdbcType="INTEGER" />
+    <result column="rofit_ratio" property="rofitRatio" jdbcType="REAL" />
+    <result column="pay_time" property="payTime" jdbcType="INTEGER" />
+    <result column="reserve_time" property="reserveTime" jdbcType="INTEGER" />
+    <result column="expire_time" property="expireTime" jdbcType="INTEGER" />
+    <result column="buy_pay_way" property="buyPayWay" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="INTEGER" />
+    <result column="iscomment" property="iscomment" jdbcType="TINYINT" />
+    <result column="isreply" property="isreply" jdbcType="TINYINT" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="is_check" property="isCheck" jdbcType="TINYINT" />
+    <result column="ledger_rule_id" property="ledgerRuleId" jdbcType="CHAR" />
+    <result column="ledger_rule_name" property="ledgerRuleName" jdbcType="VARCHAR" />
+    <result column="ledger_cycle" property="ledgerCycle" jdbcType="TINYINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.airmcl.air.order.entity.Order" extends="BaseResultMap" >
+    <result column="service_name" property="serviceName" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, order_id, order_number, service_id, service_time, coupon_id, month_card_id, beauty_id, 
+    beauty_name, bt_id, bt_name, bt_mobile, user_id, user_mobile, referee_mobile, nickname, 
+    mobile, price, change_price, actual_price, reduce_price, is_user_package, order_type, 
+    order_industry_type, state, pay_way, service_start_time, service_end_time, rofit_ratio, 
+    pay_time, reserve_time, expire_time, buy_pay_way, createtime, iscomment, isreply, 
+    remark, is_check, ledger_rule_id, ledger_rule_name, ledger_cycle
+  </sql>
+  <sql id="Blob_Column_List" >
+    service_name
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.airmcl.air.order.entity.OrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from mdd_api_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.airmcl.air.order.entity.OrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mdd_api_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from mdd_api_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mdd_api_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.airmcl.air.order.entity.OrderExample" >
+    delete from mdd_api_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.airmcl.air.order.entity.Order" useGeneratedKeys="true" keyProperty="id" >
+    insert into mdd_api_order (order_id, order_number, service_id, 
+      service_time, coupon_id, month_card_id, 
+      beauty_id, beauty_name, bt_id, 
+      bt_name, bt_mobile, user_id, 
+      user_mobile, referee_mobile, nickname, 
+      mobile, price, change_price, 
+      actual_price, reduce_price, is_user_package, 
+      order_type, order_industry_type, state, 
+      pay_way, service_start_time, service_end_time, 
+      rofit_ratio, pay_time, reserve_time, 
+      expire_time, buy_pay_way, createtime, 
+      iscomment, isreply, remark, 
+      is_check, ledger_rule_id, ledger_rule_name, 
+      ledger_cycle, service_name)
+    values (#{orderId,jdbcType=INTEGER}, #{orderNumber,jdbcType=VARCHAR}, #{serviceId,jdbcType=VARCHAR}, 
+      #{serviceTime,jdbcType=SMALLINT}, #{couponId,jdbcType=INTEGER}, #{monthCardId,jdbcType=INTEGER}, 
+      #{beautyId,jdbcType=INTEGER}, #{beautyName,jdbcType=VARCHAR}, #{btId,jdbcType=INTEGER}, 
+      #{btName,jdbcType=VARCHAR}, #{btMobile,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{userMobile,jdbcType=VARCHAR}, #{refereeMobile,jdbcType=INTEGER}, #{nickname,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{changePrice,jdbcType=DECIMAL}, 
+      #{actualPrice,jdbcType=DECIMAL}, #{reducePrice,jdbcType=DECIMAL}, #{isUserPackage,jdbcType=TINYINT}, 
+      #{orderType,jdbcType=TINYINT}, #{orderIndustryType,jdbcType=TINYINT}, #{state,jdbcType=TINYINT}, 
+      #{payWay,jdbcType=TINYINT}, #{serviceStartTime,jdbcType=INTEGER}, #{serviceEndTime,jdbcType=INTEGER}, 
+      #{rofitRatio,jdbcType=REAL}, #{payTime,jdbcType=INTEGER}, #{reserveTime,jdbcType=INTEGER}, 
+      #{expireTime,jdbcType=INTEGER}, #{buyPayWay,jdbcType=VARCHAR}, #{createtime,jdbcType=INTEGER}, 
+      #{iscomment,jdbcType=TINYINT}, #{isreply,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR}, 
+      #{isCheck,jdbcType=TINYINT}, #{ledgerRuleId,jdbcType=CHAR}, #{ledgerRuleName,jdbcType=VARCHAR}, 
+      #{ledgerCycle,jdbcType=TINYINT}, #{serviceName,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.airmcl.air.order.entity.Order" useGeneratedKeys="true" keyProperty="id" >
+    insert into mdd_api_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderNumber != null" >
+        order_number,
+      </if>
+      <if test="serviceId != null" >
+        service_id,
+      </if>
+      <if test="serviceTime != null" >
+        service_time,
+      </if>
+      <if test="couponId != null" >
+        coupon_id,
+      </if>
+      <if test="monthCardId != null" >
+        month_card_id,
+      </if>
+      <if test="beautyId != null" >
+        beauty_id,
+      </if>
+      <if test="beautyName != null" >
+        beauty_name,
+      </if>
+      <if test="btId != null" >
+        bt_id,
+      </if>
+      <if test="btName != null" >
+        bt_name,
+      </if>
+      <if test="btMobile != null" >
+        bt_mobile,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userMobile != null" >
+        user_mobile,
+      </if>
+      <if test="refereeMobile != null" >
+        referee_mobile,
+      </if>
+      <if test="nickname != null" >
+        nickname,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="changePrice != null" >
+        change_price,
+      </if>
+      <if test="actualPrice != null" >
+        actual_price,
+      </if>
+      <if test="reducePrice != null" >
+        reduce_price,
+      </if>
+      <if test="isUserPackage != null" >
+        is_user_package,
+      </if>
+      <if test="orderType != null" >
+        order_type,
+      </if>
+      <if test="orderIndustryType != null" >
+        order_industry_type,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="payWay != null" >
+        pay_way,
+      </if>
+      <if test="serviceStartTime != null" >
+        service_start_time,
+      </if>
+      <if test="serviceEndTime != null" >
+        service_end_time,
+      </if>
+      <if test="rofitRatio != null" >
+        rofit_ratio,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+      <if test="reserveTime != null" >
+        reserve_time,
+      </if>
+      <if test="expireTime != null" >
+        expire_time,
+      </if>
+      <if test="buyPayWay != null" >
+        buy_pay_way,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="iscomment != null" >
+        iscomment,
+      </if>
+      <if test="isreply != null" >
+        isreply,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="isCheck != null" >
+        is_check,
+      </if>
+      <if test="ledgerRuleId != null" >
+        ledger_rule_id,
+      </if>
+      <if test="ledgerRuleName != null" >
+        ledger_rule_name,
+      </if>
+      <if test="ledgerCycle != null" >
+        ledger_cycle,
+      </if>
+      <if test="serviceName != null" >
+        service_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderNumber != null" >
+        #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceId != null" >
+        #{serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceTime != null" >
+        #{serviceTime,jdbcType=SMALLINT},
+      </if>
+      <if test="couponId != null" >
+        #{couponId,jdbcType=INTEGER},
+      </if>
+      <if test="monthCardId != null" >
+        #{monthCardId,jdbcType=INTEGER},
+      </if>
+      <if test="beautyId != null" >
+        #{beautyId,jdbcType=INTEGER},
+      </if>
+      <if test="beautyName != null" >
+        #{beautyName,jdbcType=VARCHAR},
+      </if>
+      <if test="btId != null" >
+        #{btId,jdbcType=INTEGER},
+      </if>
+      <if test="btName != null" >
+        #{btName,jdbcType=VARCHAR},
+      </if>
+      <if test="btMobile != null" >
+        #{btMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userMobile != null" >
+        #{userMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="refereeMobile != null" >
+        #{refereeMobile,jdbcType=INTEGER},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="changePrice != null" >
+        #{changePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPrice != null" >
+        #{actualPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="reducePrice != null" >
+        #{reducePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isUserPackage != null" >
+        #{isUserPackage,jdbcType=TINYINT},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=TINYINT},
+      </if>
+      <if test="orderIndustryType != null" >
+        #{orderIndustryType,jdbcType=TINYINT},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="payWay != null" >
+        #{payWay,jdbcType=TINYINT},
+      </if>
+      <if test="serviceStartTime != null" >
+        #{serviceStartTime,jdbcType=INTEGER},
+      </if>
+      <if test="serviceEndTime != null" >
+        #{serviceEndTime,jdbcType=INTEGER},
+      </if>
+      <if test="rofitRatio != null" >
+        #{rofitRatio,jdbcType=REAL},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=INTEGER},
+      </if>
+      <if test="reserveTime != null" >
+        #{reserveTime,jdbcType=INTEGER},
+      </if>
+      <if test="expireTime != null" >
+        #{expireTime,jdbcType=INTEGER},
+      </if>
+      <if test="buyPayWay != null" >
+        #{buyPayWay,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=INTEGER},
+      </if>
+      <if test="iscomment != null" >
+        #{iscomment,jdbcType=TINYINT},
+      </if>
+      <if test="isreply != null" >
+        #{isreply,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isCheck != null" >
+        #{isCheck,jdbcType=TINYINT},
+      </if>
+      <if test="ledgerRuleId != null" >
+        #{ledgerRuleId,jdbcType=CHAR},
+      </if>
+      <if test="ledgerRuleName != null" >
+        #{ledgerRuleName,jdbcType=VARCHAR},
+      </if>
+      <if test="ledgerCycle != null" >
+        #{ledgerCycle,jdbcType=TINYINT},
+      </if>
+      <if test="serviceName != null" >
+        #{serviceName,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.airmcl.air.order.entity.OrderExample" resultType="java.lang.Integer" >
+    select count(*) from mdd_api_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update mdd_api_order
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderNumber != null" >
+        order_number = #{record.orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceId != null" >
+        service_id = #{record.serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceTime != null" >
+        service_time = #{record.serviceTime,jdbcType=SMALLINT},
+      </if>
+      <if test="record.couponId != null" >
+        coupon_id = #{record.couponId,jdbcType=INTEGER},
+      </if>
+      <if test="record.monthCardId != null" >
+        month_card_id = #{record.monthCardId,jdbcType=INTEGER},
+      </if>
+      <if test="record.beautyId != null" >
+        beauty_id = #{record.beautyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.beautyName != null" >
+        beauty_name = #{record.beautyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.btId != null" >
+        bt_id = #{record.btId,jdbcType=INTEGER},
+      </if>
+      <if test="record.btName != null" >
+        bt_name = #{record.btName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.btMobile != null" >
+        bt_mobile = #{record.btMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userMobile != null" >
+        user_mobile = #{record.userMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refereeMobile != null" >
+        referee_mobile = #{record.refereeMobile,jdbcType=INTEGER},
+      </if>
+      <if test="record.nickname != null" >
+        nickname = #{record.nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null" >
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.changePrice != null" >
+        change_price = #{record.changePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.actualPrice != null" >
+        actual_price = #{record.actualPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.reducePrice != null" >
+        reduce_price = #{record.reducePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isUserPackage != null" >
+        is_user_package = #{record.isUserPackage,jdbcType=TINYINT},
+      </if>
+      <if test="record.orderType != null" >
+        order_type = #{record.orderType,jdbcType=TINYINT},
+      </if>
+      <if test="record.orderIndustryType != null" >
+        order_industry_type = #{record.orderIndustryType,jdbcType=TINYINT},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=TINYINT},
+      </if>
+      <if test="record.payWay != null" >
+        pay_way = #{record.payWay,jdbcType=TINYINT},
+      </if>
+      <if test="record.serviceStartTime != null" >
+        service_start_time = #{record.serviceStartTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.serviceEndTime != null" >
+        service_end_time = #{record.serviceEndTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.rofitRatio != null" >
+        rofit_ratio = #{record.rofitRatio,jdbcType=REAL},
+      </if>
+      <if test="record.payTime != null" >
+        pay_time = #{record.payTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.reserveTime != null" >
+        reserve_time = #{record.reserveTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.expireTime != null" >
+        expire_time = #{record.expireTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.buyPayWay != null" >
+        buy_pay_way = #{record.buyPayWay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=INTEGER},
+      </if>
+      <if test="record.iscomment != null" >
+        iscomment = #{record.iscomment,jdbcType=TINYINT},
+      </if>
+      <if test="record.isreply != null" >
+        isreply = #{record.isreply,jdbcType=TINYINT},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isCheck != null" >
+        is_check = #{record.isCheck,jdbcType=TINYINT},
+      </if>
+      <if test="record.ledgerRuleId != null" >
+        ledger_rule_id = #{record.ledgerRuleId,jdbcType=CHAR},
+      </if>
+      <if test="record.ledgerRuleName != null" >
+        ledger_rule_name = #{record.ledgerRuleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ledgerCycle != null" >
+        ledger_cycle = #{record.ledgerCycle,jdbcType=TINYINT},
+      </if>
+      <if test="record.serviceName != null" >
+        service_name = #{record.serviceName,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update mdd_api_order
+    set id = #{record.id,jdbcType=INTEGER},
+      order_id = #{record.orderId,jdbcType=INTEGER},
+      order_number = #{record.orderNumber,jdbcType=VARCHAR},
+      service_id = #{record.serviceId,jdbcType=VARCHAR},
+      service_time = #{record.serviceTime,jdbcType=SMALLINT},
+      coupon_id = #{record.couponId,jdbcType=INTEGER},
+      month_card_id = #{record.monthCardId,jdbcType=INTEGER},
+      beauty_id = #{record.beautyId,jdbcType=INTEGER},
+      beauty_name = #{record.beautyName,jdbcType=VARCHAR},
+      bt_id = #{record.btId,jdbcType=INTEGER},
+      bt_name = #{record.btName,jdbcType=VARCHAR},
+      bt_mobile = #{record.btMobile,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      user_mobile = #{record.userMobile,jdbcType=VARCHAR},
+      referee_mobile = #{record.refereeMobile,jdbcType=INTEGER},
+      nickname = #{record.nickname,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DECIMAL},
+      change_price = #{record.changePrice,jdbcType=DECIMAL},
+      actual_price = #{record.actualPrice,jdbcType=DECIMAL},
+      reduce_price = #{record.reducePrice,jdbcType=DECIMAL},
+      is_user_package = #{record.isUserPackage,jdbcType=TINYINT},
+      order_type = #{record.orderType,jdbcType=TINYINT},
+      order_industry_type = #{record.orderIndustryType,jdbcType=TINYINT},
+      state = #{record.state,jdbcType=TINYINT},
+      pay_way = #{record.payWay,jdbcType=TINYINT},
+      service_start_time = #{record.serviceStartTime,jdbcType=INTEGER},
+      service_end_time = #{record.serviceEndTime,jdbcType=INTEGER},
+      rofit_ratio = #{record.rofitRatio,jdbcType=REAL},
+      pay_time = #{record.payTime,jdbcType=INTEGER},
+      reserve_time = #{record.reserveTime,jdbcType=INTEGER},
+      expire_time = #{record.expireTime,jdbcType=INTEGER},
+      buy_pay_way = #{record.buyPayWay,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=INTEGER},
+      iscomment = #{record.iscomment,jdbcType=TINYINT},
+      isreply = #{record.isreply,jdbcType=TINYINT},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      is_check = #{record.isCheck,jdbcType=TINYINT},
+      ledger_rule_id = #{record.ledgerRuleId,jdbcType=CHAR},
+      ledger_rule_name = #{record.ledgerRuleName,jdbcType=VARCHAR},
+      ledger_cycle = #{record.ledgerCycle,jdbcType=TINYINT},
+      service_name = #{record.serviceName,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update mdd_api_order
+    set id = #{record.id,jdbcType=INTEGER},
+      order_id = #{record.orderId,jdbcType=INTEGER},
+      order_number = #{record.orderNumber,jdbcType=VARCHAR},
+      service_id = #{record.serviceId,jdbcType=VARCHAR},
+      service_time = #{record.serviceTime,jdbcType=SMALLINT},
+      coupon_id = #{record.couponId,jdbcType=INTEGER},
+      month_card_id = #{record.monthCardId,jdbcType=INTEGER},
+      beauty_id = #{record.beautyId,jdbcType=INTEGER},
+      beauty_name = #{record.beautyName,jdbcType=VARCHAR},
+      bt_id = #{record.btId,jdbcType=INTEGER},
+      bt_name = #{record.btName,jdbcType=VARCHAR},
+      bt_mobile = #{record.btMobile,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      user_mobile = #{record.userMobile,jdbcType=VARCHAR},
+      referee_mobile = #{record.refereeMobile,jdbcType=INTEGER},
+      nickname = #{record.nickname,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DECIMAL},
+      change_price = #{record.changePrice,jdbcType=DECIMAL},
+      actual_price = #{record.actualPrice,jdbcType=DECIMAL},
+      reduce_price = #{record.reducePrice,jdbcType=DECIMAL},
+      is_user_package = #{record.isUserPackage,jdbcType=TINYINT},
+      order_type = #{record.orderType,jdbcType=TINYINT},
+      order_industry_type = #{record.orderIndustryType,jdbcType=TINYINT},
+      state = #{record.state,jdbcType=TINYINT},
+      pay_way = #{record.payWay,jdbcType=TINYINT},
+      service_start_time = #{record.serviceStartTime,jdbcType=INTEGER},
+      service_end_time = #{record.serviceEndTime,jdbcType=INTEGER},
+      rofit_ratio = #{record.rofitRatio,jdbcType=REAL},
+      pay_time = #{record.payTime,jdbcType=INTEGER},
+      reserve_time = #{record.reserveTime,jdbcType=INTEGER},
+      expire_time = #{record.expireTime,jdbcType=INTEGER},
+      buy_pay_way = #{record.buyPayWay,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=INTEGER},
+      iscomment = #{record.iscomment,jdbcType=TINYINT},
+      isreply = #{record.isreply,jdbcType=TINYINT},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      is_check = #{record.isCheck,jdbcType=TINYINT},
+      ledger_rule_id = #{record.ledgerRuleId,jdbcType=CHAR},
+      ledger_rule_name = #{record.ledgerRuleName,jdbcType=VARCHAR},
+      ledger_cycle = #{record.ledgerCycle,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.airmcl.air.order.entity.Order" >
+    update mdd_api_order
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderNumber != null" >
+        order_number = #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceId != null" >
+        service_id = #{serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceTime != null" >
+        service_time = #{serviceTime,jdbcType=SMALLINT},
+      </if>
+      <if test="couponId != null" >
+        coupon_id = #{couponId,jdbcType=INTEGER},
+      </if>
+      <if test="monthCardId != null" >
+        month_card_id = #{monthCardId,jdbcType=INTEGER},
+      </if>
+      <if test="beautyId != null" >
+        beauty_id = #{beautyId,jdbcType=INTEGER},
+      </if>
+      <if test="beautyName != null" >
+        beauty_name = #{beautyName,jdbcType=VARCHAR},
+      </if>
+      <if test="btId != null" >
+        bt_id = #{btId,jdbcType=INTEGER},
+      </if>
+      <if test="btName != null" >
+        bt_name = #{btName,jdbcType=VARCHAR},
+      </if>
+      <if test="btMobile != null" >
+        bt_mobile = #{btMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userMobile != null" >
+        user_mobile = #{userMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="refereeMobile != null" >
+        referee_mobile = #{refereeMobile,jdbcType=INTEGER},
+      </if>
+      <if test="nickname != null" >
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="changePrice != null" >
+        change_price = #{changePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPrice != null" >
+        actual_price = #{actualPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="reducePrice != null" >
+        reduce_price = #{reducePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isUserPackage != null" >
+        is_user_package = #{isUserPackage,jdbcType=TINYINT},
+      </if>
+      <if test="orderType != null" >
+        order_type = #{orderType,jdbcType=TINYINT},
+      </if>
+      <if test="orderIndustryType != null" >
+        order_industry_type = #{orderIndustryType,jdbcType=TINYINT},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="payWay != null" >
+        pay_way = #{payWay,jdbcType=TINYINT},
+      </if>
+      <if test="serviceStartTime != null" >
+        service_start_time = #{serviceStartTime,jdbcType=INTEGER},
+      </if>
+      <if test="serviceEndTime != null" >
+        service_end_time = #{serviceEndTime,jdbcType=INTEGER},
+      </if>
+      <if test="rofitRatio != null" >
+        rofit_ratio = #{rofitRatio,jdbcType=REAL},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=INTEGER},
+      </if>
+      <if test="reserveTime != null" >
+        reserve_time = #{reserveTime,jdbcType=INTEGER},
+      </if>
+      <if test="expireTime != null" >
+        expire_time = #{expireTime,jdbcType=INTEGER},
+      </if>
+      <if test="buyPayWay != null" >
+        buy_pay_way = #{buyPayWay,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=INTEGER},
+      </if>
+      <if test="iscomment != null" >
+        iscomment = #{iscomment,jdbcType=TINYINT},
+      </if>
+      <if test="isreply != null" >
+        isreply = #{isreply,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isCheck != null" >
+        is_check = #{isCheck,jdbcType=TINYINT},
+      </if>
+      <if test="ledgerRuleId != null" >
+        ledger_rule_id = #{ledgerRuleId,jdbcType=CHAR},
+      </if>
+      <if test="ledgerRuleName != null" >
+        ledger_rule_name = #{ledgerRuleName,jdbcType=VARCHAR},
+      </if>
+      <if test="ledgerCycle != null" >
+        ledger_cycle = #{ledgerCycle,jdbcType=TINYINT},
+      </if>
+      <if test="serviceName != null" >
+        service_name = #{serviceName,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.airmcl.air.order.entity.Order" >
+    update mdd_api_order
+    set order_id = #{orderId,jdbcType=INTEGER},
+      order_number = #{orderNumber,jdbcType=VARCHAR},
+      service_id = #{serviceId,jdbcType=VARCHAR},
+      service_time = #{serviceTime,jdbcType=SMALLINT},
+      coupon_id = #{couponId,jdbcType=INTEGER},
+      month_card_id = #{monthCardId,jdbcType=INTEGER},
+      beauty_id = #{beautyId,jdbcType=INTEGER},
+      beauty_name = #{beautyName,jdbcType=VARCHAR},
+      bt_id = #{btId,jdbcType=INTEGER},
+      bt_name = #{btName,jdbcType=VARCHAR},
+      bt_mobile = #{btMobile,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      user_mobile = #{userMobile,jdbcType=VARCHAR},
+      referee_mobile = #{refereeMobile,jdbcType=INTEGER},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      change_price = #{changePrice,jdbcType=DECIMAL},
+      actual_price = #{actualPrice,jdbcType=DECIMAL},
+      reduce_price = #{reducePrice,jdbcType=DECIMAL},
+      is_user_package = #{isUserPackage,jdbcType=TINYINT},
+      order_type = #{orderType,jdbcType=TINYINT},
+      order_industry_type = #{orderIndustryType,jdbcType=TINYINT},
+      state = #{state,jdbcType=TINYINT},
+      pay_way = #{payWay,jdbcType=TINYINT},
+      service_start_time = #{serviceStartTime,jdbcType=INTEGER},
+      service_end_time = #{serviceEndTime,jdbcType=INTEGER},
+      rofit_ratio = #{rofitRatio,jdbcType=REAL},
+      pay_time = #{payTime,jdbcType=INTEGER},
+      reserve_time = #{reserveTime,jdbcType=INTEGER},
+      expire_time = #{expireTime,jdbcType=INTEGER},
+      buy_pay_way = #{buyPayWay,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=INTEGER},
+      iscomment = #{iscomment,jdbcType=TINYINT},
+      isreply = #{isreply,jdbcType=TINYINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      is_check = #{isCheck,jdbcType=TINYINT},
+      ledger_rule_id = #{ledgerRuleId,jdbcType=CHAR},
+      ledger_rule_name = #{ledgerRuleName,jdbcType=VARCHAR},
+      ledger_cycle = #{ledgerCycle,jdbcType=TINYINT},
+      service_name = #{serviceName,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.airmcl.air.order.entity.Order" >
+    update mdd_api_order
+    set order_id = #{orderId,jdbcType=INTEGER},
+      order_number = #{orderNumber,jdbcType=VARCHAR},
+      service_id = #{serviceId,jdbcType=VARCHAR},
+      service_time = #{serviceTime,jdbcType=SMALLINT},
+      coupon_id = #{couponId,jdbcType=INTEGER},
+      month_card_id = #{monthCardId,jdbcType=INTEGER},
+      beauty_id = #{beautyId,jdbcType=INTEGER},
+      beauty_name = #{beautyName,jdbcType=VARCHAR},
+      bt_id = #{btId,jdbcType=INTEGER},
+      bt_name = #{btName,jdbcType=VARCHAR},
+      bt_mobile = #{btMobile,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      user_mobile = #{userMobile,jdbcType=VARCHAR},
+      referee_mobile = #{refereeMobile,jdbcType=INTEGER},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      change_price = #{changePrice,jdbcType=DECIMAL},
+      actual_price = #{actualPrice,jdbcType=DECIMAL},
+      reduce_price = #{reducePrice,jdbcType=DECIMAL},
+      is_user_package = #{isUserPackage,jdbcType=TINYINT},
+      order_type = #{orderType,jdbcType=TINYINT},
+      order_industry_type = #{orderIndustryType,jdbcType=TINYINT},
+      state = #{state,jdbcType=TINYINT},
+      pay_way = #{payWay,jdbcType=TINYINT},
+      service_start_time = #{serviceStartTime,jdbcType=INTEGER},
+      service_end_time = #{serviceEndTime,jdbcType=INTEGER},
+      rofit_ratio = #{rofitRatio,jdbcType=REAL},
+      pay_time = #{payTime,jdbcType=INTEGER},
+      reserve_time = #{reserveTime,jdbcType=INTEGER},
+      expire_time = #{expireTime,jdbcType=INTEGER},
+      buy_pay_way = #{buyPayWay,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=INTEGER},
+      iscomment = #{iscomment,jdbcType=TINYINT},
+      isreply = #{isreply,jdbcType=TINYINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      is_check = #{isCheck,jdbcType=TINYINT},
+      ledger_rule_id = #{ledgerRuleId,jdbcType=CHAR},
+      ledger_rule_name = #{ledgerRuleName,jdbcType=VARCHAR},
+      ledger_cycle = #{ledgerCycle,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insertBatch" parameterType="com.airmcl.air.order.entity.Order" >
+    insert into mdd_api_order (id, order_id, order_number, 
+      service_id, service_time, coupon_id, 
+      month_card_id, beauty_id, beauty_name, 
+      bt_id, bt_name, bt_mobile, 
+      user_id, user_mobile, referee_mobile, 
+      nickname, mobile, price, 
+      change_price, actual_price, reduce_price, 
+      is_user_package, order_type, order_industry_type, 
+      state, pay_way, service_start_time, 
+      service_end_time, rofit_ratio, pay_time, 
+      reserve_time, expire_time, buy_pay_way, 
+      createtime, iscomment, isreply, 
+      remark, is_check, ledger_rule_id, 
+      ledger_rule_name, ledger_cycle, 
+      service_name) values 
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{_uuid}, #{item.orderId,jdbcType=INTEGER}, #{item.orderNumber,jdbcType=VARCHAR}, 
+        #{item.serviceId,jdbcType=VARCHAR}, #{item.serviceTime,jdbcType=SMALLINT}, #{item.couponId,jdbcType=INTEGER}, 
+        #{item.monthCardId,jdbcType=INTEGER}, #{item.beautyId,jdbcType=INTEGER}, #{item.beautyName,jdbcType=VARCHAR}, 
+        #{item.btId,jdbcType=INTEGER}, #{item.btName,jdbcType=VARCHAR}, #{item.btMobile,jdbcType=VARCHAR}, 
+        #{item.userId,jdbcType=VARCHAR}, #{item.userMobile,jdbcType=VARCHAR}, #{item.refereeMobile,jdbcType=INTEGER}, 
+        #{item.nickname,jdbcType=VARCHAR}, #{item.mobile,jdbcType=VARCHAR}, #{item.price,jdbcType=DECIMAL}, 
+        #{item.changePrice,jdbcType=DECIMAL}, #{item.actualPrice,jdbcType=DECIMAL}, #{item.reducePrice,jdbcType=DECIMAL}, 
+        #{item.isUserPackage,jdbcType=TINYINT}, #{item.orderType,jdbcType=TINYINT}, #{item.orderIndustryType,jdbcType=TINYINT}, 
+        #{item.state,jdbcType=TINYINT}, #{item.payWay,jdbcType=TINYINT}, #{item.serviceStartTime,jdbcType=INTEGER}, 
+        #{item.serviceEndTime,jdbcType=INTEGER}, #{item.rofitRatio,jdbcType=REAL}, #{item.payTime,jdbcType=INTEGER}, 
+        #{item.reserveTime,jdbcType=INTEGER}, #{item.expireTime,jdbcType=INTEGER}, #{item.buyPayWay,jdbcType=VARCHAR}, 
+        #{item.createtime,jdbcType=INTEGER}, #{item.iscomment,jdbcType=TINYINT}, #{item.isreply,jdbcType=TINYINT}, 
+        #{item.remark,jdbcType=VARCHAR}, #{item.isCheck,jdbcType=TINYINT}, #{item.ledgerRuleId,jdbcType=CHAR}, 
+        #{item.ledgerRuleName,jdbcType=VARCHAR}, #{item.ledgerCycle,jdbcType=TINYINT}, 
+        #{item.serviceName,jdbcType=LONGVARCHAR})
+    </foreach>
+  </insert>
+  <select id="selectByExampleByPage" resultMap="BaseResultMap" parameterType="com.airmcl.air.order.entity.OrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mdd_api_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

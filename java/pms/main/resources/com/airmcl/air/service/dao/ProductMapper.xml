@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.airmcl.air.service.dao.ProductMapper" >
+  <resultMap id="BaseResultMap" type="com.airmcl.air.service.entity.Product" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="industry_type" property="industryType" jdbcType="TINYINT" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="title_phonetic" property="titlePhonetic" jdbcType="VARCHAR" />
+    <result column="effect" property="effect" jdbcType="VARCHAR" />
+    <result column="contain" property="contain" jdbcType="VARCHAR" />
+    <result column="people_use" property="peopleUse" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="TINYINT" />
+    <result column="createtime" property="createtime" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, type, industry_type, img_url, title, title_phonetic, effect, contain, people_use, 
+    state, createtime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.airmcl.air.service.entity.ProductExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mdd_api_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from mdd_api_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mdd_api_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.airmcl.air.service.entity.ProductExample" >
+    delete from mdd_api_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.airmcl.air.service.entity.Product" useGeneratedKeys="true" keyProperty="id" >
+    insert into mdd_api_product (type, industry_type, img_url, 
+      title, title_phonetic, effect, 
+      contain, people_use, state, 
+      createtime)
+    values (#{type,jdbcType=TINYINT}, #{industryType,jdbcType=TINYINT}, #{imgUrl,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{titlePhonetic,jdbcType=VARCHAR}, #{effect,jdbcType=VARCHAR}, 
+      #{contain,jdbcType=VARCHAR}, #{peopleUse,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT}, 
+      #{createtime,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.airmcl.air.service.entity.Product" useGeneratedKeys="true" keyProperty="id" >
+    insert into mdd_api_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="industryType != null" >
+        industry_type,
+      </if>
+      <if test="imgUrl != null" >
+        img_url,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="titlePhonetic != null" >
+        title_phonetic,
+      </if>
+      <if test="effect != null" >
+        effect,
+      </if>
+      <if test="contain != null" >
+        contain,
+      </if>
+      <if test="peopleUse != null" >
+        people_use,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="industryType != null" >
+        #{industryType,jdbcType=TINYINT},
+      </if>
+      <if test="imgUrl != null" >
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="titlePhonetic != null" >
+        #{titlePhonetic,jdbcType=VARCHAR},
+      </if>
+      <if test="effect != null" >
+        #{effect,jdbcType=VARCHAR},
+      </if>
+      <if test="contain != null" >
+        #{contain,jdbcType=VARCHAR},
+      </if>
+      <if test="peopleUse != null" >
+        #{peopleUse,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.airmcl.air.service.entity.ProductExample" resultType="java.lang.Integer" >
+    select count(*) from mdd_api_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update mdd_api_product
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=TINYINT},
+      </if>
+      <if test="record.industryType != null" >
+        industry_type = #{record.industryType,jdbcType=TINYINT},
+      </if>
+      <if test="record.imgUrl != null" >
+        img_url = #{record.imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.titlePhonetic != null" >
+        title_phonetic = #{record.titlePhonetic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effect != null" >
+        effect = #{record.effect,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contain != null" >
+        contain = #{record.contain,jdbcType=VARCHAR},
+      </if>
+      <if test="record.peopleUse != null" >
+        people_use = #{record.peopleUse,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=TINYINT},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update mdd_api_product
+    set id = #{record.id,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=TINYINT},
+      industry_type = #{record.industryType,jdbcType=TINYINT},
+      img_url = #{record.imgUrl,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      title_phonetic = #{record.titlePhonetic,jdbcType=VARCHAR},
+      effect = #{record.effect,jdbcType=VARCHAR},
+      contain = #{record.contain,jdbcType=VARCHAR},
+      people_use = #{record.peopleUse,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=TINYINT},
+      createtime = #{record.createtime,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.airmcl.air.service.entity.Product" >
+    update mdd_api_product
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="industryType != null" >
+        industry_type = #{industryType,jdbcType=TINYINT},
+      </if>
+      <if test="imgUrl != null" >
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="titlePhonetic != null" >
+        title_phonetic = #{titlePhonetic,jdbcType=VARCHAR},
+      </if>
+      <if test="effect != null" >
+        effect = #{effect,jdbcType=VARCHAR},
+      </if>
+      <if test="contain != null" >
+        contain = #{contain,jdbcType=VARCHAR},
+      </if>
+      <if test="peopleUse != null" >
+        people_use = #{peopleUse,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.airmcl.air.service.entity.Product" >
+    update mdd_api_product
+    set type = #{type,jdbcType=TINYINT},
+      industry_type = #{industryType,jdbcType=TINYINT},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      title_phonetic = #{titlePhonetic,jdbcType=VARCHAR},
+      effect = #{effect,jdbcType=VARCHAR},
+      contain = #{contain,jdbcType=VARCHAR},
+      people_use = #{peopleUse,jdbcType=VARCHAR},
+      state = #{state,jdbcType=TINYINT},
+      createtime = #{createtime,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insertBatch" parameterType="com.airmcl.air.service.entity.Product" >
+    insert into mdd_api_product (id, type, industry_type, 
+      img_url, title, title_phonetic, 
+      effect, contain, people_use, 
+      state, createtime) values 
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{_uuid}, #{item.type,jdbcType=TINYINT}, #{item.industryType,jdbcType=TINYINT}, 
+        #{item.imgUrl,jdbcType=VARCHAR}, #{item.title,jdbcType=VARCHAR}, #{item.titlePhonetic,jdbcType=VARCHAR}, 
+        #{item.effect,jdbcType=VARCHAR}, #{item.contain,jdbcType=VARCHAR}, #{item.peopleUse,jdbcType=VARCHAR}, 
+        #{item.state,jdbcType=TINYINT}, #{item.createtime,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+  <select id="selectByExampleByPage" resultMap="BaseResultMap" parameterType="com.airmcl.air.service.entity.ProductExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mdd_api_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.airmcl.air.service.dao.ext.ServiceExtMapper" >
+    <select id="selectAllSingleService" resultMap="com.airmcl.air.service.dao.ServiceMapper.BaseResultMap">
+      select * from mdd_api_service where is_package=1 and state=1
+    </select>
+    <select id="selectAllSingleAndTypeOneService" resultMap="com.airmcl.air.service.dao.ServiceMapper.BaseResultMap">
+      select * from mdd_api_service where is_package=1  and state=1
+    </select>
+    <resultMap type="com.airmcl.air.service.entity.ServiceIdNameCover" id="seviceInfo">
+        <id property="id" column="id"/>
+        <result property="serviceName" column="service_name"/>
+        <result property="serviceCover" column="service_cover"/>
+    </resultMap>
+    <select id="selectServiceIdNameCoverByServiceIds" parameterType="java.util.List" resultMap="seviceInfo">
+       select id,service_name,service_cover from mdd_api_service where id in
+       <foreach separator="," collection="list" item="id" open="(" close=")"  >
+            #{id}
+       </foreach>
+    </select>
+</mapper>

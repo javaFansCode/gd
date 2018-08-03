@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.airmcl.air.app.dao.PhotoMapper" >
+  <resultMap id="BaseResultMap" type="com.airmcl.air.app.entity.Photo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="post_id" property="post_id" jdbcType="INTEGER" />
+    <result column="type_code" property="type_code" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="SMALLINT" />
+    <result column="original_path" property="original_path" jdbcType="VARCHAR" />
+    <result column="thumb_path" property="thumb_path" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="INTEGER" />
+    <result column="isdelete" property="isdelete" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, post_id, type_code, sort, original_path, thumb_path, createtime, isdelete
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.airmcl.air.app.entity.PhotoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mdd_api_photo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from mdd_api_photo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mdd_api_photo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.airmcl.air.app.entity.PhotoExample" >
+    delete from mdd_api_photo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.airmcl.air.app.entity.Photo" useGeneratedKeys="true" keyProperty="id" >
+    insert into mdd_api_photo (post_id, type_code, sort, 
+      original_path, thumb_path, createtime, 
+      isdelete)
+    values (#{post_id,jdbcType=INTEGER}, #{type_code,jdbcType=VARCHAR}, #{sort,jdbcType=SMALLINT}, 
+      #{original_path,jdbcType=VARCHAR}, #{thumb_path,jdbcType=VARCHAR}, #{createtime,jdbcType=INTEGER}, 
+      #{isdelete,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.airmcl.air.app.entity.Photo" useGeneratedKeys="true" keyProperty="id" >
+    insert into mdd_api_photo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="post_id != null" >
+        post_id,
+      </if>
+      <if test="type_code != null" >
+        type_code,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="original_path != null" >
+        original_path,
+      </if>
+      <if test="thumb_path != null" >
+        thumb_path,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="isdelete != null" >
+        isdelete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="post_id != null" >
+        #{post_id,jdbcType=INTEGER},
+      </if>
+      <if test="type_code != null" >
+        #{type_code,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=SMALLINT},
+      </if>
+      <if test="original_path != null" >
+        #{original_path,jdbcType=VARCHAR},
+      </if>
+      <if test="thumb_path != null" >
+        #{thumb_path,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=INTEGER},
+      </if>
+      <if test="isdelete != null" >
+        #{isdelete,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.airmcl.air.app.entity.PhotoExample" resultType="java.lang.Integer" >
+    select count(*) from mdd_api_photo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update mdd_api_photo
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.post_id != null" >
+        post_id = #{record.post_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.type_code != null" >
+        type_code = #{record.type_code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sort != null" >
+        sort = #{record.sort,jdbcType=SMALLINT},
+      </if>
+      <if test="record.original_path != null" >
+        original_path = #{record.original_path,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thumb_path != null" >
+        thumb_path = #{record.thumb_path,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=INTEGER},
+      </if>
+      <if test="record.isdelete != null" >
+        isdelete = #{record.isdelete,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update mdd_api_photo
+    set id = #{record.id,jdbcType=INTEGER},
+      post_id = #{record.post_id,jdbcType=INTEGER},
+      type_code = #{record.type_code,jdbcType=VARCHAR},
+      sort = #{record.sort,jdbcType=SMALLINT},
+      original_path = #{record.original_path,jdbcType=VARCHAR},
+      thumb_path = #{record.thumb_path,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=INTEGER},
+      isdelete = #{record.isdelete,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.airmcl.air.app.entity.Photo" >
+    update mdd_api_photo
+    <set >
+      <if test="post_id != null" >
+        post_id = #{post_id,jdbcType=INTEGER},
+      </if>
+      <if test="type_code != null" >
+        type_code = #{type_code,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=SMALLINT},
+      </if>
+      <if test="original_path != null" >
+        original_path = #{original_path,jdbcType=VARCHAR},
+      </if>
+      <if test="thumb_path != null" >
+        thumb_path = #{thumb_path,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=INTEGER},
+      </if>
+      <if test="isdelete != null" >
+        isdelete = #{isdelete,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.airmcl.air.app.entity.Photo" >
+    update mdd_api_photo
+    set post_id = #{post_id,jdbcType=INTEGER},
+      type_code = #{type_code,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=SMALLINT},
+      original_path = #{original_path,jdbcType=VARCHAR},
+      thumb_path = #{thumb_path,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=INTEGER},
+      isdelete = #{isdelete,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insertBatch" parameterType="com.airmcl.air.app.entity.Photo" >
+    insert into mdd_api_photo (id, post_id, type_code, 
+      sort, original_path, thumb_path, 
+      createtime, isdelete) values 
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{_uuid}, #{item.post_id,jdbcType=INTEGER}, #{item.type_code,jdbcType=VARCHAR}, 
+        #{item.sort,jdbcType=SMALLINT}, #{item.original_path,jdbcType=VARCHAR}, #{item.thumb_path,jdbcType=VARCHAR}, 
+        #{item.createtime,jdbcType=INTEGER}, #{item.isdelete,jdbcType=TINYINT})
+    </foreach>
+  </insert>
+  <select id="selectByExampleByPage" resultMap="BaseResultMap" parameterType="com.airmcl.air.app.entity.PhotoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mdd_api_photo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

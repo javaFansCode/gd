@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.airmcl.air.service.dao.ServiceExtendMapper" >
+  <resultMap id="BaseResultMap" type="com.airmcl.air.service.entity.ServiceExtend" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="service_id" property="serviceId" jdbcType="INTEGER" />
+    <result column="effect" property="effect" jdbcType="VARCHAR" />
+    <result column="internal_friction" property="internalFriction" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.airmcl.air.service.entity.ServiceExtend" extends="BaseResultMap" >
+    <result column="service_desc" property="serviceDesc" jdbcType="LONGVARCHAR" />
+    <result column="service_step" property="serviceStep" jdbcType="LONGVARCHAR" />
+    <result column="people_use" property="peopleUse" jdbcType="LONGVARCHAR" />
+    <result column="note" property="note" jdbcType="LONGVARCHAR" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, service_id, effect, internal_friction, remark, createtime
+  </sql>
+  <sql id="Blob_Column_List" >
+    service_desc, service_step, people_use, note, content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.airmcl.air.service.entity.ServiceExtendExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from mdd_api_service_extend
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.airmcl.air.service.entity.ServiceExtendExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mdd_api_service_extend
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from mdd_api_service_extend
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mdd_api_service_extend
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.airmcl.air.service.entity.ServiceExtendExample" >
+    delete from mdd_api_service_extend
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.airmcl.air.service.entity.ServiceExtend" useGeneratedKeys="true" keyProperty="id" >
+    insert into mdd_api_service_extend (service_id, effect, internal_friction, 
+      remark, createtime, service_desc, 
+      service_step, people_use, note, 
+      content)
+    values (#{serviceId,jdbcType=INTEGER}, #{effect,jdbcType=VARCHAR}, #{internalFriction,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR}, #{serviceDesc,jdbcType=LONGVARCHAR}, 
+      #{serviceStep,jdbcType=LONGVARCHAR}, #{peopleUse,jdbcType=LONGVARCHAR}, #{note,jdbcType=LONGVARCHAR}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.airmcl.air.service.entity.ServiceExtend" useGeneratedKeys="true" keyProperty="id" >
+    insert into mdd_api_service_extend
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="serviceId != null" >
+        service_id,
+      </if>
+      <if test="effect != null" >
+        effect,
+      </if>
+      <if test="internalFriction != null" >
+        internal_friction,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="serviceDesc != null" >
+        service_desc,
+      </if>
+      <if test="serviceStep != null" >
+        service_step,
+      </if>
+      <if test="peopleUse != null" >
+        people_use,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="serviceId != null" >
+        #{serviceId,jdbcType=INTEGER},
+      </if>
+      <if test="effect != null" >
+        #{effect,jdbcType=VARCHAR},
+      </if>
+      <if test="internalFriction != null" >
+        #{internalFriction,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceDesc != null" >
+        #{serviceDesc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="serviceStep != null" >
+        #{serviceStep,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="peopleUse != null" >
+        #{peopleUse,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.airmcl.air.service.entity.ServiceExtendExample" resultType="java.lang.Integer" >
+    select count(*) from mdd_api_service_extend
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update mdd_api_service_extend
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.serviceId != null" >
+        service_id = #{record.serviceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.effect != null" >
+        effect = #{record.effect,jdbcType=VARCHAR},
+      </if>
+      <if test="record.internalFriction != null" >
+        internal_friction = #{record.internalFriction,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceDesc != null" >
+        service_desc = #{record.serviceDesc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.serviceStep != null" >
+        service_step = #{record.serviceStep,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.peopleUse != null" >
+        people_use = #{record.peopleUse,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.note != null" >
+        note = #{record.note,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update mdd_api_service_extend
+    set id = #{record.id,jdbcType=INTEGER},
+      service_id = #{record.serviceId,jdbcType=INTEGER},
+      effect = #{record.effect,jdbcType=VARCHAR},
+      internal_friction = #{record.internalFriction,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=VARCHAR},
+      service_desc = #{record.serviceDesc,jdbcType=LONGVARCHAR},
+      service_step = #{record.serviceStep,jdbcType=LONGVARCHAR},
+      people_use = #{record.peopleUse,jdbcType=LONGVARCHAR},
+      note = #{record.note,jdbcType=LONGVARCHAR},
+      content = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update mdd_api_service_extend
+    set id = #{record.id,jdbcType=INTEGER},
+      service_id = #{record.serviceId,jdbcType=INTEGER},
+      effect = #{record.effect,jdbcType=VARCHAR},
+      internal_friction = #{record.internalFriction,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.airmcl.air.service.entity.ServiceExtend" >
+    update mdd_api_service_extend
+    <set >
+      <if test="serviceId != null" >
+        service_id = #{serviceId,jdbcType=INTEGER},
+      </if>
+      <if test="effect != null" >
+        effect = #{effect,jdbcType=VARCHAR},
+      </if>
+      <if test="internalFriction != null" >
+        internal_friction = #{internalFriction,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceDesc != null" >
+        service_desc = #{serviceDesc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="serviceStep != null" >
+        service_step = #{serviceStep,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="peopleUse != null" >
+        people_use = #{peopleUse,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.airmcl.air.service.entity.ServiceExtend" >
+    update mdd_api_service_extend
+    set service_id = #{serviceId,jdbcType=INTEGER},
+      effect = #{effect,jdbcType=VARCHAR},
+      internal_friction = #{internalFriction,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=VARCHAR},
+      service_desc = #{serviceDesc,jdbcType=LONGVARCHAR},
+      service_step = #{serviceStep,jdbcType=LONGVARCHAR},
+      people_use = #{peopleUse,jdbcType=LONGVARCHAR},
+      note = #{note,jdbcType=LONGVARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.airmcl.air.service.entity.ServiceExtend" >
+    update mdd_api_service_extend
+    set service_id = #{serviceId,jdbcType=INTEGER},
+      effect = #{effect,jdbcType=VARCHAR},
+      internal_friction = #{internalFriction,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insertBatch" parameterType="com.airmcl.air.service.entity.ServiceExtend" >
+    insert into mdd_api_service_extend (id, service_id, effect, internal_friction, 
+      remark, createtime, service_desc, 
+      service_step, people_use, 
+      note, content) values 
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{_uuid}, #{item.serviceId,jdbcType=INTEGER}, #{item.effect,jdbcType=VARCHAR}, #{item.internalFriction,jdbcType=INTEGER}, 
+        #{item.remark,jdbcType=VARCHAR}, #{item.createtime,jdbcType=VARCHAR}, #{item.serviceDesc,jdbcType=LONGVARCHAR}, 
+        #{item.serviceStep,jdbcType=LONGVARCHAR}, #{item.peopleUse,jdbcType=LONGVARCHAR}, 
+        #{item.note,jdbcType=LONGVARCHAR}, #{item.content,jdbcType=LONGVARCHAR})
+    </foreach>
+  </insert>
+  <select id="selectByExampleByPage" resultMap="BaseResultMap" parameterType="com.airmcl.air.service.entity.ServiceExtendExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mdd_api_service_extend
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

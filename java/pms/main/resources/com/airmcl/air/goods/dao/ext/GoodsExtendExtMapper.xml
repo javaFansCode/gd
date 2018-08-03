@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.airmcl.air.goods.dao.ext.GoodsExtendExtMapper" >
+   <select id="selectGoodsExtendByGoodsId"  parameterType="java.lang.Integer" resultMap="com.airmcl.air.goods.dao.GoodsExtendMapper.ResultMapWithBLOBs">
+		select * from mdd_api_goods_extend where goods_id=#{goodsId,jdbcType=INTEGER}
+   </select>
+</mapper>

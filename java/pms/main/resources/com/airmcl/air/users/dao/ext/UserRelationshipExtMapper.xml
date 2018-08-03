@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.airmcl.air.users.dao.ext.UserRelationshipExtMapper">
+	<select id="findfindUserRelationList"
+		resultType="com.airmcl.air.users.out.OutUserRelationship"
+		parameterType="com.airmcl.air.users.enter.EnterUserRelationParams">
+		
+		select mr.id,mr.user_id as userId,mr.user_phone as userPhone,mr.state,mr.createtime,mus.vipcard_name as userNickName,mus.vip_number as vipNumber,
+		mus.vip_expire as vipExpire
+		FROM mdd_api_user_relationship  mr
+		LEFT JOIN
+			mdd_api_users mus on mr.user_id = mus.user_id
+		where 1 = 1
+		<if test="userId != null">
+			AND mr.user_id = #{userId}
+		</if>
+		<if test="startcreatetime != null &amp; endcreatetime != null ">AND mr.createtime between #{startcreatetime} AND #{endcreatetime}
+		</if>
+		<if test="vipcardName != null">
+			AND mus.vipcard_name like '%${vipcardName}%'
+		</if>
+		order by mr.createtime desc 
+		limit #{pageNo},#{pageSize}
+	</select>
+	
+	
+	<select id="countUserRelation" resultType="java.lang.Integer" parameterType="com.airmcl.air.users.enter.EnterUserRelationParams">
+		select count(1)
+		FROM mdd_api_user_relationship as mr
+		LEFT JOIN
+			mdd_api_users mus on mr.user_id = mus.user_id
+		where 1 = 1
+		<if test="userId != null">
+			AND mr.user_id = #{userId}
+		</if>
+		<if test="startcreatetime != null &amp; endcreatetime != null ">AND mr.createtime between #{startcreatetime} AND #{endcreatetime}
+		</if>
+		<if test="vipcardName != null">
+			AND mus.vipcard_name like '%${vipcardName}%'
+		</if>
+</select>
+</mapper>

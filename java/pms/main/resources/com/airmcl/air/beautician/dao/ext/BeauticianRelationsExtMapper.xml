@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.airmcl.air.beautician.dao.ext.BeauticianRelationsExtMapper" >
+ 
+  <resultMap id="BaseResultServiceExtMap" type="com.airmcl.air.beautician.out.BeauitcianRelationService" >
+    <result column="service_id" property="serviceId" jdbcType="INTEGER" />
+    <result column="beauty_id" property="beautyId" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="id" property="relationsId" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="findServiceByBeauticianId" resultMap="BaseResultServiceExtMap" parameterType="map" >
+		SELECT r.id,bs.*, IFNULL(r.state,0) as state 
+		FROM 
+		(SELECT r.beauty_id,r.relation_id as service_id FROM mdd_api_beauty_relations r WHERE 1=1 
+		<if test="beautyId != null">
+		AND r.beauty_id = #{beautyId}
+		</if>
+		AND r.type=1 AND r.state=1)  AS bs
+		 LEFT JOIN mdd_api_beautician_relations r ON r.service_id = bs.service_id 
+		 <if test="beauticianId !=null">
+		 AND r.bt_id = #{beauticianId}
+		 </if>
+		 AND r.state = 1
+  </select>
+</mapper>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorInterval="5">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n" />
+        </Console>
+        <!-- 添加过滤器ThresholdFilter,可以有选择的输出某个级别以上的类别 onMatch="ACCEPT" onMismatch="DENY"意思是匹配就接受,否则直接拒绝 -->
+        <File name="ERROR" fileName="logs/air-pms/error.log">
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" />
+            <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n" />
+        </File>
+
+        <File name="INFO" fileName="logs/air-pms/info.log">
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" />
+            <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n" />
+        </File>
+
+        <File name="TRACE" fileName="logs/air-pms/debug.log">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" />
+            <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n" />
+        </File>
+
+        <File name="DEBUG" fileName="logs/air-pms/debug.log">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" />
+            <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n" />
+        </File>
+
+        <File name="WARN" fileName="logs/air-pms/error.log">
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" />
+            <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n" />
+        </File>
+
+        <!-- 添加过滤器ThresholdFilter,可以有选择的输出某个级别以上的类别 onMatch="ACCEPT" onMismatch="DENY"意思是匹配就接受,否则直接拒绝 -->
+        <RollingFile name="DruidSql" fileName="logs/air-pms/druid_sql.log" filePattern="logs/air-pms/druid_sql-%d{yyyy-MM-dd}.log" >
+            <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n" />
+            <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+        </RollingFile>
+
+    </Appenders>
+    <Loggers>
+        <Logger name="druid.sql" level="WARN" additivity="false">
+            <AppenderRef ref="Console" />
+        </Logger>
+        <Logger name="org.quartz" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="org.apache.ibatis" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="org.mybatis" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="org.springframework" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="springfox.documentation" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Root level="debug">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="DEBUG" />
+            <AppenderRef ref="INFO" />
+            <AppenderRef ref="WARN" />
+            <AppenderRef ref="ERROR" />
+        </Root>
+    </Loggers>
+</Configuration>

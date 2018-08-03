@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.airmcl.air.beauty.dao.ext.BeautyRelationsExtMapper" >
+ 
+  <resultMap id="BaseResultServiceExtMap" type="com.airmcl.air.beauty.entity.BeautyRelationsServiceVO" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="service_id" property="serviceId" jdbcType="INTEGER" />
+    <result column="service_name" property="serviceName" jdbcType="VARCHAR" />
+    <result column="service_cover" property="serviceCover" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="beauty_id" property="beautyId" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="service_state" property="serviceState" jdbcType="TINYINT" />
+  </resultMap>
+  
+    <resultMap id="BaseResultGoodsExtMap" type="com.airmcl.air.beauty.entity.BeautyRelationsGoodsVO" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_cover" property="goodsCover" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="beauty_id" property="beautyId" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="goods_state" property="goodsState" jdbcType="TINYINT" />
+  </resultMap>
+  
+  <select id="selectServiceByBeautyId" resultMap="BaseResultServiceExtMap" resultType="java.util.Map" >
+		select b.id ,s.id service_id, s.service_name,s.service_cover,  IFNULL(b.state,0) state,b.beauty_id ,b.type,s.state service_state 
+		from mdd_api_service s
+		left JOIN mdd_api_beauty_relations  b on s.id=b.relation_id 
+			and b.beauty_id= #{beautyId} 
+			and b.type=1 
+		<if test="serviceState != null" >
+		where s.state=#{serviceState}
+		</if>
+  </select>
+    <select id="selectGoodsByBeautyId" resultMap="BaseResultGoodsExtMap" resultType="java.util.Map" >
+		select b.id ,s.id goods_id, s.goods_name,s.goods_cover ,  IFNULL(b.state,0) state,b.beauty_id ,b.type,s.state goods_state 
+		from mdd_api_goods s
+		left JOIN mdd_api_beauty_relations  b on s.id=b.relation_id 
+			and b.beauty_id= #{beautyId} 
+			and b.type=2
+		<if test="goodsState != null" >
+		where s.state=#{goodsState}
+		</if>
+		
+  </select>
+ 
+  
+</mapper>
