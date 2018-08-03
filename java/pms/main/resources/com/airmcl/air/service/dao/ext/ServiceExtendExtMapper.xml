@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.airmcl.air.service.dao.ext.ServiceExtendExtMapper" >
-    <select id="selectByServiceId" parameterType="java.lang.Integer" resultMap="com.airmcl.air.service.dao.ServiceExtendMapper.ResultMapWithBLOBs">
-        select * FROM mdd_api_service_extend as m where m.service_id= #{serviceId,jdbcType=INTEGER}
-    </select>
-</mapper>
